@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "FirstAjax";
+}
+
+<h1>第一支Ajax程式</h1>
+
+<button id="btnStart" class="btn btn-primary" >AjaxStart</button><img id="LoadingImg" style="display:none" src="~/Loading.gif" />
+<button id="btnEnd" class="btn btn-danger">AjaxStop</button>
+<div    id="div1" class="alert alert-info "></div>
+
+@section Scripts
+{
+    <script>
+        const btnStart = document.querySelector('#btnStart')
+        const div = document.querySelector('#div1')
+        const LoadingImg = document.querySelector('#LoadingImg')
+        const btnEnd =document.querySelector('#btnEnd')
+
+        
+
+        btn.addEventListener('click', ()=>
+        {
+            const Request = new XMLHttpRequest();
+            Request.open('GET', '@Url.Content("~/API/Index")?name=Alan&age=20');
+            Request.send();
+        Request.addEventListener('loadstart' , ()=>{
+        btnStart.setAttribute('disabled' , 'disabled');
+        LoadingImg.style.display ="inline";
+        div.innerHTML += "Your Request is processing<br/>"
+        btnStart.innerHTML ="Loading...";
+        })
+
+        Request.addEventListener('load', ()=>{
+        const data = Request.responseText;
+        div.innerHTML = data;
+        })
+        })
+    </script>
+}
+
+

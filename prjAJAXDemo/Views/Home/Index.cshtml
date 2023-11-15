@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {<style>p{color:aqua}</style>}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <table id="table" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>姓名</th>
+                <th>年資</th>
+                <th>薪水</th>
+            </tr>
+            </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script>
+        $('.display-4').css('background-color', '#ACD6FF')
+        var emp = { "employees": [{ "name": "Alan", "workYears": 3, "salary": 90000 },
+                                  { "name": "Tom", "workYears":  4, "salary": 80000 }, 
+                                  { "name": "Pan", "workYears":  5, "salary": 70000 },] 
+        };
+        //for(i=0,max=emp.employees.length;i<max;i++)
+        //{
+        //  console.log(emp.employees[i].name);
+        //  console.log(emp.employees[i].workYears);
+        //  console.log(emp.employees[i].salary);
+        //}
+
+        const datas = emp.employees.map(employee => {
+            
+            const { name, workYears, salary } = employee;
+        return
+        (
+           `
+           <tr>
+                <td>${name}</td>
+                <td>${workYears}</td>
+                <td>${salary}</td>
+           </tr>
+           `
+        )
+        })
+        document.querySelector('#table>tbody').innerHTML = datas.join("");
+
+        //const datas = emp.employees.map(employee => {
+        //    const { name, workYears, salary } = employee;
+        //    return (
+        //                `
+        //                <tr>
+        //                        <td>${name}</td>
+        //                        <td>${workYears}</td>
+        //                        <td>${salary}</td>
+        //               </tr>
+        //                `
+        //    )
+        //})
+        //document.querySelector('#table>tbody').innerHTML = datas.join("");
+    </script>
+ }

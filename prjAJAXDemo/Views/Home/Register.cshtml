@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form method="post" id="memberInfoForm" action="~/API/register">
+            <div class="mb-3">
+                <label for="inputName" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="inputName" name="name">
+            </div>
+            <div class ="alert alert-info" id="DivCheckName">
+    </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">電子郵件</label>
+                <input type="email" class="form-control" id="inputEmail" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="inputAge" class="form-label">年紀</label>
+                <input type="number" class="form-control" id="inputAge" name="age">
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">檔案上傳</label>
+                <input class="form-control" type="file" id="formFile" name="formFile">
+            </div>
+            <button id="buttonSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="div1" class="alert alert-info"></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+@section Scripts 
+{
+    <script>
+        const btn = document.querySelector('#buttonSubmit')
+        const divMessage = document.querySelector('#div1')
+        const inname = document.querySelector('#inputName')
+        const nameDiv = document.querySelector('#DivCheckName')
+        
+        //const email = document.querySelector('#inputEmail')
+        //const age = document.querySelector('#inputAge')
+        inname.addEventListener('blur',()=>
+        {
+            const XHR = new XMLHttpRequest();
+
+            XHR.addEventListener('load', () => {
+                const data = XHR.responseText;
+                nameDiv.innerHTML = data;
+            });
+            //const formData = new FormData(document.querySelector('#memberInfoForm'))
+            XHR.open('POST', '@Url.Content("~/API/CheckAccount")');
+            XHR.send(inname);
+        });
+        
+        btn.addEventListener('click' , event=>
+        {
+          event.preventDefault();
+          const XHR = new XMLHttpRequest()
+          
+          XHR.addEventListener('load' , ()=>
+          {
+             const data = XHR.responseText;
+             divMessage.innerHTML = data;
+          })
+          const formData = new FormData(document.querySelector('#memberInfoForm'))
+          XHR.open('POST' , '@Url.Content("~/API/register")');
+          XHR.send(formData)
+          //XHR.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded');
+          //XHR.send(`name=${name.value}&age=${age.value}&email=${email.value}`)
+        })
+
+        
+    </script>
+}
