@@ -42,38 +42,48 @@
         const inname = document.querySelector('#inputName')
         const nameDiv = document.querySelector('#DivCheckName')
         
-        //const email = document.querySelector('#inputEmail')
-        //const age = document.querySelector('#inputAge')
-        inname.addEventListener('blur',()=>
-        {
-            const XHR = new XMLHttpRequest();
+        ////const email = document.querySelector('#inputEmail')
+        ////const age = document.querySelector('#inputAge')
+        //inname.addEventListener('blur',()=>
+        //{
+        //    const XHR = new XMLHttpRequest();
 
-            XHR.addEventListener('load', () => {
-                const data = XHR.responseText;
-                nameDiv.innerHTML = data;
-            });
-            //const formData = new FormData(document.querySelector('#memberInfoForm'))
-            XHR.open('POST', '@Url.Content("~/API/CheckAccount")');
-            XHR.send(inname);
-        });
+        //    XHR.addEventListener('load', () => {
+        //        const data = XHR.responseText;
+        //        nameDiv.innerHTML = data;
+        //    });
+        //    //const formData = new FormData(document.querySelector('#memberInfoForm'))
+        //    XHR.open('POST', '@Url.Content("~/API/CheckAccount")');
+        //    XHR.send(inname);
+        //});
         
         btn.addEventListener('click' , event=>
         {
           event.preventDefault();
-          const XHR = new XMLHttpRequest()
+        //  const XHR = new XMLHttpRequest()
           
-          XHR.addEventListener('load' , ()=>
-          {
-             const data = XHR.responseText;
-             divMessage.innerHTML = data;
-          })
-          const formData = new FormData(document.querySelector('#memberInfoForm'))
-          XHR.open('POST' , '@Url.Content("~/API/register")');
-          XHR.send(formData)
-          //XHR.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded');
-          //XHR.send(`name=${name.value}&age=${age.value}&email=${email.value}`)
+        //  XHR.addEventListener('load' , ()=>
+        //  {
+        //     const data = XHR.responseText;
+        //     divMessage.innerHTML = data;
+        //  })
+        //  const formData = new FormData(document.querySelector('#memberInfoForm'))
+        //  XHR.open('POST' , '@Url.Content("~/API/register")');
+        //  XHR.send(formData)
+        //  //XHR.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded');
+        //  //XHR.send(`name=${name.value}&age=${age.value}&email=${email.value}`)
+        //})
+
+        //使用Fetch抓資料
+        const formData = new FormData(document.querySelector('#memberInfoForm'));
+        fetch('@Url.Content("~/API/register")' , {method:'POST' , body:formData})
+        .then(Response=>{if (Response.ok)
+            {alert("新增成功");
+            location.href = '@Url.Content("~/Home/Member")';
+            }
         })
 
-        
+
+        })
     </script>
 }

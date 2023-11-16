@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Fetch";
+}
+
+<h1>Fetch</h1>
+<div id="div1"></div>
+<img id="img1" />
+<ul id="ul1"></ul>
+@section Scripts
+{
+    <script>
+        //fetch('@Url.Content("Index")?name=Mary&age=30').then(response => response.text()).then(data => document.querySelector('#div1').innerHTML = data);
+        async function loadText() 
+        {
+            const response = await fetch('@Url.Content("~/api/index")?name=Mary&age=30');
+            const data = await response.text();
+            document.querySelector('#div1').innerHTML = data
+        }
+        loadText();
+
+
+        //fetch('@Url.Content("cities")').then(Response => Response.json()).then(datas => 
+        //                                                                  {const cities = datas.map(city => `<li>${city}</li>`) 
+        //                                                                  document.querySelector('#ul1').innerHTML += cities.join("");
+        //                                                                  });
+        async function loadJson() 
+        {
+            const response = await fetch('@Url.Content("~/api/cities")');
+            const datas = await response.json();
+            const cities = datas.map(city => `<li>${city}</li>`)
+            document.querySelector('#ul1').innerHTML = cities.join("");
+        }
+        loadJson();
+
+        //fetch('@Url.Content("GetImageByte/1")').then(Response => Response.blob()).then(datas =>{document.querySelector('#img1').src = URL.createObjectURL(datas)});
+        async function loadImage() 
+        {
+            const response = await fetch('@Url.Content("~/api/GetImageByte/6")');
+            const datas = await response.blob();
+            document.querySelector('#img1').src = URL.createObjectURL(datas);
+        }
+        loadImage();
+    </script>
+}
